@@ -1,13 +1,13 @@
 import React from 'react';
-import Weather from './Weather';
-import './styles.css'; // Importera CSS-filen
+import Weather from './components/Weather';
+import './styles/weather.css'; // Importera styling
 
-const App = () => {
+function App() {
   return (
     <div className="App">
       <Weather />
     </div>
   );
-};
+}
 
 export default App;
