@@ -1,6 +1,6 @@
 import React from 'react';
-import Weather from './components/Weather';
-import './styles/weather.css'; // Importera styling
+import Weather from "./pages/Weather.jsx";
+import "./pages/Weather.css";
 
 function App() {
   return (

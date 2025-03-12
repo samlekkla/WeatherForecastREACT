@@ -1,14 +1,17 @@
+import "./SearchBar.css";
+
 const SearchBar = ({ searchQuery, handleSearchChange, handleSearchSubmit }) => {
     return (
-        <div className="search">
+        <div className="search-bar">
             <form onSubmit={handleSearchSubmit}>
                 <input
+                    className="search-input"
                     type="text"
-                    placeholder="Sök stad"
+                    placeholder="Search city"
                     value={searchQuery}
                     onChange={handleSearchChange}
                 />
-                <button type="submit">Sök</button>
+                <button className="search-button" type="submit">Search</button>
             </form>
         </div>
     );
