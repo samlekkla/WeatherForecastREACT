@@ -3,6 +3,8 @@ import Favorites from "../components/Favorites/Favorites";
 import Forecast from "../components/Forecast/Forecast";
 import CurrentWeather from "../components/CurrentWeather/CurrentWeather";
 import SearchBar from "../components/SearchBar/SearchBar";
+import Footer from "../components/Footer/Footer";
+
 import "./Weather.css";
 
 const Weather = () => {
@@ -101,10 +103,10 @@ const Weather = () => {
       <h1>Weather Forecast</h1>
 
       {/* SearchBar for city input */}
-      <SearchBar 
-        searchQuery={searchQuery} 
-        handleSearchChange={handleSearchChange} 
-        handleSearchSubmit={handleSearchSubmit} 
+      <SearchBar
+        searchQuery={searchQuery}
+        handleSearchChange={handleSearchChange}
+        handleSearchSubmit={handleSearchSubmit}
       />
 
       {/* Favorites Section */}
@@ -122,7 +124,13 @@ const Weather = () => {
 
       {/* Forecast Section */}
       <Forecast forecast={forecast} />
+
+      {/* Footer Section */}
+      <Footer />
+
     </div>
+
+
   );
 };
 
