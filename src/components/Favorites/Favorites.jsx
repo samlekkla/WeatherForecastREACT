@@ -9,7 +9,7 @@ const Favorites = ({ favorites, removeFavorite, handleFavoriteClick }) => {
         {favorites.map((city, index) => (
           <li key={index}>
             <a href="#" onClick={() => handleFavoriteClick(city)}>{city}</a>
-            <span className="remove-text" onClick={() => removeFavorite(favorites.filter(fav => fav !== city))}>X</span>
+            <span className="remove-text" onClick={() => removeFavorite(city)}>X</span>
           </li>
         ))}
       </ul>

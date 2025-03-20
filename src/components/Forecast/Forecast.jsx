@@ -10,8 +10,8 @@ const Forecast = ({ forecast }) => {
             <p><strong>{item.date}</strong></p>
             <img src={`https://openweathermap.org/img/wn/${item.icon}.png`} alt={item.description} />
             <p>{item.description}</p>
-            <p><strong>Min:</strong> {item.minTemp}°C</p>
-            <p><strong>Max:</strong> {item.maxTemp}°C</p>
+            <p><strong>⬇️ Min:</strong> {item.minTemp}°C</p>
+            <p><strong>⬆️ Max:</strong> {item.maxTemp}°C</p>
           </div>
         ))}
       </div>

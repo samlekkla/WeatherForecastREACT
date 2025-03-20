@@ -5,6 +5,7 @@ import CurrentWeather from "../components/CurrentWeather/CurrentWeather";
 import SearchBar from "../components/SearchBar/SearchBar";
 import Footer from "../components/Footer/Footer";
 
+
 import "./Weather.css";
 
 const Weather = () => {
@@ -35,6 +36,8 @@ const Weather = () => {
           date: new Date().toLocaleDateString(),
           time: new Date().toLocaleTimeString(),
           temp: data.main.temp,
+          minTemp: data.main.temp_min,  // Lägsta temperatur
+          maxTemp: data.main.temp_max,  // Högsta temperatur
           description: data.weather[0].description,
           icon: data.weather[0].icon,
         });
@@ -58,31 +61,42 @@ const Weather = () => {
     }
   };
 
-  // Group forecast data by day
-  const groupForecastByDay = (forecastData) => {
-    const forecastByDay = [];
+// Group forecast data by day
+const groupForecastByDay = (forecastData) => {
+  const forecastByDay = [];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
 
-    forecastData.forEach((item) => {
-      const date = new Date(item.dt * 1000).toLocaleDateString();
-      let day = forecastByDay.find((day) => day.date === date);
+  forecastData.forEach((item) => {
+    const date = new Date(item.dt * 1000);
+    date.setHours(0, 0, 0, 0); // Remove time part for accurate comparison
 
-      if (!day) {
-        day = {
-          date,
-          minTemp: item.main.temp_min,
-          maxTemp: item.main.temp_max,
-          icon: item.weather[0].icon,
-          description: item.weather[0].description,
-        };
-        forecastByDay.push(day);
-      } else {
-        day.minTemp = Math.min(day.minTemp, item.main.temp_min);
-        day.maxTemp = Math.max(day.maxTemp, item.main.temp_max);
-      }
-    });
+    // Skip today's forecast
+    if (date <= today) return;
 
-    return forecastByDay;
-  };
+    // Limit to the next 5 days
+    if (forecastByDay.length >= 5) return;
+
+    let day = forecastByDay.find((day) => day.date === date.toLocaleDateString());
+
+    if (!day) {
+      day = {
+        date: date.toLocaleDateString(),
+        minTemp: item.main.temp_min,
+        maxTemp: item.main.temp_max,
+        icon: item.weather[0].icon,
+        description: item.weather[0].description,
+      };
+      forecastByDay.push(day);
+    } else {
+      day.minTemp = Math.min(day.minTemp, item.main.temp_min);
+      day.maxTemp = Math.max(day.maxTemp, item.main.temp_max);
+    }
+  });
+
+  return forecastByDay;
+};
+
 
   // Handle search input change
   const handleSearchChange = (e) => {

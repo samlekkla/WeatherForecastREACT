@@ -6,8 +6,9 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f4f7fb;
+  background-color: #E3F2FD; 
   color: #333;
+  background: linear-gradient(to bottom, #458ac3, #aecde3);
   line-height: 1.6;
   display: flex;
   justify-content: center;

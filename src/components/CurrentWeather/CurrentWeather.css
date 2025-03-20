@@ -1,100 +1,125 @@
 .current-weather {
-    background-color: #ffffff;
-    padding: 25px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    text-align: center;
-    max-width: 600px;
-    margin: 20px auto;
-  }
-  
-  .current-weather h2 {
-    font-size: 28px;
-    color: #4e8ad3;
-    margin-bottom: 15px;
-    font-weight: bold;
-  }
-  
-  .current-weather p {
-    font-size: 20px;
-    color: #777;
-    margin: 8px 0;
-    font-weight: 300;
-  }
-  
-  .current-weather .weather-icon {
-    width: 60px;
-    height: 60px;
-    margin-top: 10px;
-  }
-  
-  .current-weather button {
-    background-color: #50a3d7;
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .current-weather button:hover {
-    background-color: #4192c7;
-  }
-  
-  /* Responsiv design */
-  @media (max-width: 768px) {
-    .current-weather {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  text-align: center;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.current-weather h2 {
+  font-size: 28px;
+  color: #4e8ad3;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.current-weather .date-time {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.current-weather .temperature {
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+}
+
+.current-weather .min-max-temp {
+  font-size: 18px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.current-weather .description {
+  font-size: 18px;
+  color: #888;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.current-weather .weather-icon {
+  width: 70px;
+  height: 70px;
+  margin: 10px 0;
+}
+
+.current-weather button {
+  background-color: #50a3d7;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.current-weather button:hover {
+  background-color: #4192c7;
+}
+
+/* Responsiv design */
+@media (max-width: 768px) {
+  .current-weather {
       padding: 20px;
       margin: 15px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-  
-    .current-weather h2 {
+  }
+
+  .current-weather h2 {
       font-size: 24px;
-    }
-  
-    .current-weather p {
-      font-size: 18px;
-    }
-  
-    .current-weather .weather-icon {
-      width: 50px;
-      height: 50px;
-    }
-  
-    .current-weather button {
+  }
+
+  .current-weather .temperature {
+      font-size: 22px;
+  }
+
+  .current-weather .min-max-temp {
+      font-size: 16px;
+  }
+
+  .current-weather .weather-icon {
+      width: 60px;
+      height: 60px;
+  }
+
+  .current-weather button {
       font-size: 14px;
       padding: 8px 16px;
-    }
   }
-  
-  @media (max-width: 480px) {
-    .current-weather {
+}
+
+@media (max-width: 480px) {
+  .current-weather {
       padding: 15px;
       margin: 10px;
-    }
-  
-    .current-weather h2 {
+  }
+
+  .current-weather h2 {
       font-size: 20px;
-    }
-  
-    .current-weather p {
-      font-size: 16px;
-    }
-  
-    .current-weather .weather-icon {
-      width: 45px;
-      height: 45px;
-    }
-  
-    .current-weather button {
+  }
+
+  .current-weather .temperature {
+      font-size: 20px;
+  }
+
+  .current-weather .min-max-temp {
+      font-size: 14px;
+  }
+
+  .current-weather .weather-icon {
+      width: 50px;
+      height: 50px;
+  }
+
+  .current-weather button {
       font-size: 14px;
       padding: 8px 14px;
-    }
   }
-  
+}
