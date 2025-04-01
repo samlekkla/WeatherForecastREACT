@@ -1,5 +1,5 @@
-import React from 'react';
-import './CurrentWeather.css';
+import React from "react";
+import "./CurrentWeather.css";
 
 const CurrentWeather = ({ currentWeather, addToFavorites }) => {
   if (!currentWeather) return <p>Loading...</p>;
@@ -8,7 +8,11 @@ const CurrentWeather = ({ currentWeather, addToFavorites }) => {
     <div className="current-weather">
       <h2>{currentWeather.city}</h2>
       <p className="date-time">{currentWeather.date} - {currentWeather.time}</p>
-      <img className="weather-icon" src={`https://openweathermap.org/img/wn/${currentWeather.icon}.png`} alt="Weather icon" />
+      <img
+        className="weather-icon"
+        src={`https://openweathermap.org/img/wn/${currentWeather.icon}.png`}
+        alt="Weather icon"
+      />
       <p className="temperature">🌡️ {currentWeather.temp}°C</p>
       <p className="min-max-temp">⬇️ Min: {currentWeather.minTemp}°C | ⬆️ Max: {currentWeather.maxTemp}°C</p>
       <p className="description">{currentWeather.description}</p>

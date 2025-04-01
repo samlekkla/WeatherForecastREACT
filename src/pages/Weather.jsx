@@ -4,8 +4,7 @@ import Forecast from "../components/Forecast/Forecast";
 import CurrentWeather from "../components/CurrentWeather/CurrentWeather";
 import SearchBar from "../components/SearchBar/SearchBar";
 import Footer from "../components/Footer/Footer";
-
-
+import { fetchWeatherData, fetchForecastData } from "../services/weatherService";
 import "./Weather.css";
 
 const Weather = () => {
@@ -15,100 +14,74 @@ const Weather = () => {
   const [favorites, setFavorites] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const apiKey = '7f2302001416b3549088c98c1c5e7d9c';
-
-  // Fetch weather and forecast data on city change
+  // När staden ändras, hämta väderdata
   useEffect(() => {
     if (city) {
-      fetchWeatherData(city);
-      fetchForecastData(city);
+      getCurrentWeather(city);
+      getForecast(city);
     }
   }, [city]);
 
-  // Fetch current weather data
-  const fetchWeatherData = async (city) => {
+  const getCurrentWeather = async (city) => {
     try {
-      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
-      const data = await response.json();
-      if (data.main) {
-        setCurrentWeather({
-          city: data.name,
-          date: new Date().toLocaleDateString(),
-          time: new Date().toLocaleTimeString(),
-          temp: data.main.temp,
-          minTemp: data.main.temp_min,  // Lägsta temperatur
-          maxTemp: data.main.temp_max,  // Högsta temperatur
-          description: data.weather[0].description,
-          icon: data.weather[0].icon,
-        });
+      const data = await fetchWeatherData(city);
+      setCurrentWeather(data);
+    } catch (error) {
+      alert("City not found, please try again.");
+      console.error("Error fetching current weather:", error);
+    }
+  };
+
+  const getForecast = async (city) => {
+    try {
+      const forecastData = await fetchForecastData(city);
+      const grouped = groupForecastByDay(forecastData);
+      setForecast(grouped);
+    } catch (error) {
+      console.error("Error fetching forecast:", error);
+    }
+  };
+
+  const groupForecastByDay = (forecastData) => {
+    const forecastByDay = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    forecastData.forEach((item) => {
+      const date = new Date(item.dt * 1000);
+      date.setHours(0, 0, 0, 0);
+
+      if (date <= today) return;
+      if (forecastByDay.length >= 5) return;
+
+      const dateStr = date.toLocaleDateString();
+      let day = forecastByDay.find((d) => d.date === dateStr);
+
+      if (!day) {
+        day = {
+          date: dateStr,
+          minTemp: item.main.temp_min,
+          maxTemp: item.main.temp_max,
+          icon: item.weather[0].icon,
+          description: item.weather[0].description,
+        };
+        forecastByDay.push(day);
       } else {
-        alert("City not found, please try again.");
+        day.minTemp = Math.min(day.minTemp, item.main.temp_min);
+        day.maxTemp = Math.max(day.maxTemp, item.main.temp_max);
       }
-    } catch (error) {
-      console.error("Error fetching weather data:", error);
-    }
+    });
+
+    return forecastByDay;
   };
 
-  // Fetch forecast data
-  const fetchForecastData = async (city) => {
-    try {
-      const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`);
-      const data = await response.json();
-      const groupedData = groupForecastByDay(data.list);
-      setForecast(groupedData);
-    } catch (error) {
-      console.error("Error fetching forecast data:", error);
-    }
-  };
+  const handleSearchChange = (e) => setSearchQuery(e.target.value);
 
-// Group forecast data by day
-const groupForecastByDay = (forecastData) => {
-  const forecastByDay = [];
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
-
-  forecastData.forEach((item) => {
-    const date = new Date(item.dt * 1000);
-    date.setHours(0, 0, 0, 0); // Remove time part for accurate comparison
-
-    // Skip today's forecast
-    if (date <= today) return;
-
-    // Limit to the next 5 days
-    if (forecastByDay.length >= 5) return;
-
-    let day = forecastByDay.find((day) => day.date === date.toLocaleDateString());
-
-    if (!day) {
-      day = {
-        date: date.toLocaleDateString(),
-        minTemp: item.main.temp_min,
-        maxTemp: item.main.temp_max,
-        icon: item.weather[0].icon,
-        description: item.weather[0].description,
-      };
-      forecastByDay.push(day);
-    } else {
-      day.minTemp = Math.min(day.minTemp, item.main.temp_min);
-      day.maxTemp = Math.max(day.maxTemp, item.main.temp_max);
-    }
-  });
-
-  return forecastByDay;
-};
-
-
-  // Handle search input change
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  // Handle search form submission
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery) {
       setCity(searchQuery);
-      setSearchQuery(""); // Clear the search input after submitting
+      setSearchQuery("");
     }
   };
 
@@ -116,35 +89,33 @@ const groupForecastByDay = (forecastData) => {
     <div className="weather-container">
       <h1>Weather Forecast</h1>
 
-      {/* SearchBar for city input */}
       <SearchBar
         searchQuery={searchQuery}
         handleSearchChange={handleSearchChange}
         handleSearchSubmit={handleSearchSubmit}
       />
 
-      {/* Favorites Section */}
       <Favorites
         favorites={favorites}
-        removeFavorite={(cityToRemove) => setFavorites(favorites.filter((fav) => fav !== cityToRemove))}
+        removeFavorite={(cityToRemove) =>
+          setFavorites(favorites.filter((fav) => fav !== cityToRemove))
+        }
         handleFavoriteClick={setCity}
       />
 
-      {/* Current Weather Section */}
       <CurrentWeather
         currentWeather={currentWeather}
-        addToFavorites={() => setFavorites((prevFavorites) => [...prevFavorites, city])}
+        addToFavorites={() =>
+          setFavorites((prevFavorites) =>
+            prevFavorites.includes(city) ? prevFavorites : [...prevFavorites, city]
+          )
+        }
       />
 
-      {/* Forecast Section */}
       <Forecast forecast={forecast} />
 
-      {/* Footer Section */}
       <Footer />
-
     </div>
-
-
   );
 };
 

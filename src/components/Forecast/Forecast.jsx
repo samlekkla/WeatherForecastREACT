@@ -1,3 +1,4 @@
+import React from "react";
 import "./Forecast.css";
 
 const Forecast = ({ forecast }) => {
@@ -8,7 +9,10 @@ const Forecast = ({ forecast }) => {
         {forecast.map((item, index) => (
           <div key={index} className="forecast-card">
             <p><strong>{item.date}</strong></p>
-            <img src={`https://openweathermap.org/img/wn/${item.icon}.png`} alt={item.description} />
+            <img
+              src={`https://openweathermap.org/img/wn/${item.icon}.png`}
+              alt={item.description}
+            />
             <p>{item.description}</p>
             <p><strong>⬇️ Min:</strong> {item.minTemp}°C</p>
             <p><strong>⬆️ Max:</strong> {item.maxTemp}°C</p>

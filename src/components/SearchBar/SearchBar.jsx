@@ -1,3 +1,4 @@
+import React from "react";
 import "./SearchBar.css";
 
 const SearchBar = ({ searchQuery, handleSearchChange, handleSearchSubmit }) => {

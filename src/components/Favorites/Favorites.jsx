@@ -1,5 +1,5 @@
-import React from 'react';
-import './Favorites.css';
+import React from "react";
+import "./Favorites.css";
 
 const Favorites = ({ favorites, removeFavorite, handleFavoriteClick }) => {
   return (
@@ -9,7 +9,7 @@ const Favorites = ({ favorites, removeFavorite, handleFavoriteClick }) => {
         {favorites.map((city, index) => (
           <li key={index}>
             <a href="#" onClick={() => handleFavoriteClick(city)}>{city}</a>
-            <span className="remove-text" onClick={() => removeFavorite(city)}>X</span>
+            <span className="remove-text" onClick={() => removeFavorite(city)}>Remove</span>
           </li>
         ))}
       </ul>
