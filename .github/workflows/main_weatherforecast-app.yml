@@ -64,5 +64,5 @@ jobs:
         with:
           app-name: 'weatherforecast-app'
           slot-name: 'Production'
-          package: .
+          package: dist/
           
